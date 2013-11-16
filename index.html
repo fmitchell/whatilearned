@@ -53,6 +53,7 @@
                         <li class="fragment">The Plan</li>
                         <li class="fragment"><strong>The Architecture</strong></li>
                         <li class="fragment"><code>The Code</code></li>
+                        <li class="fragment"><code>The Product</code></li>
                         <li class="fragment"><strong>The Lesson</strong></li>
                     </ol>
                 </section>
@@ -462,6 +463,46 @@ $hash = array(
     'sidebar-hidden' => TRUE,
 );
 echo $page->render($hash);
+                            </code>
+                        </pre>
+                    </section>
+
+                    <section>
+                        <h2>Getting Submissions</h2>
+                        <h3>My Big Assumption</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+// Go through each submission to geocode.
+// Based on quick testing, usage of JotForm.
+foreach ($submissions as $submission) {
+
+    // Setup variables.
+    $id = $submission['id'];
+    $form_id = $submission['form_id'];
+
+    $address_answer = $submission['answers'][$jotaddress]['answer'];
+    $label_answer = $submission['answers'][$jotlabel]['answer'];
+
+    $address = (is_array($address_answer))
+        ? implode(', ', $submission['answers'][$jotaddress]['answer'])
+        : $address_answer;
+    $name = (is_array($label_answer))
+        ? implode(' ', $submission['answers'][$jotlabel]['answer'])
+        : $label_answer;
+
+    // Build Mongo query parameters.
+    $query = array(
+        'id' => $submission['id'],
+        'form_id' => $submission['form_id']
+    );
+
+    // See if record is already in db.
+    $existing = (isset($mongo_submissions) && is_object($mongo_submissions))
+        ? $mongo_submissions->findOne($query)
+        : null;
+
+    // More stuff.
+}
                             </code>
                         </pre>
                     </section>
