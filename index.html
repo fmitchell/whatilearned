@@ -187,10 +187,10 @@
                         <h3>Try All the Things!</h3>
                         <ul>
                             <li class="fragment">Slim - Quick callbacks</li>
-                            <li class="fragment">JotForm Wrapper - Quickstart</li>
-                            <li class="fragment">Geocoder PHP - Maps like lat/long</li>
                             <li class="fragment">Bootstrap - Not a designer</li>
                             <li class="fragment">Mustache - Simple templates</li>
+                            <li class="fragment">JotForm Wrapper - Quickstart</li>
+                            <li class="fragment">Geocoder PHP - Maps like lat/long</li>
                             <li class="fragment">Mongo - Cache?</li>
                         </ul>
                     </section>
@@ -213,6 +213,93 @@
 }
                             </code>
                         </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Slim</h2>
+                        <h3>PHP Micro Framework</h3>
+                        <p>Simple way to map urls to callbacks.</p>
+                        <p>http://www.slimframework.com/</p>
+                    </section>
+                    <section>
+                        <h2>Initialize Slim</h2>
+                        <h3>index.php</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+// Load composer libraries.
+require 'vendor/autoload.php';
+
+$app = new \Slim\Slim(array(
+    'debug' => FALSE
+));
+
+$app->get('/', function() use ($app) {
+    $app->render('step1.php');
+});
+
+// more steps...
+
+$app->run();
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Bootstrap</h2>
+                        <h3>Make it pretty.</h3>
+                        <img src="http://photos-2.dropbox.com/t/0/AABy_k4GWfUluLcsMhOWGQG1KiPz2GPT5Mk6S8_ceBONzg/12/38412/png/1024x768/3/1384621200/0/2/Screenshot%202013-11-16%2009.14.21.png/eYuvyzeViSuhb2_vYwdF9NB_NxR7I-zXJQUpFC1Lzmg" height="500px"/>
+                        <p>http://getbootstrap.com/</p>
+                    </section>
+                    <section>
+                        <h2>Initialize Bootstrap</h2>
+                        <h3>Use a CDN.</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+<!-- head -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<!-- /head -->
+
+<!-- body -->
+<!-- some stuff -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<!-- /body -->
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Mustache Templates</h2>
+                        <h3>Easily reuse HTML.</h3>
+                        <img src="http://photos-2.dropbox.com/t/0/AACSoj84GIz3QX4vEf_MOjvgccG5MbwGMeVM3ZuU82NFzw/12/38412/png/1024x768/3/1384621200/0/2/Screenshot%202013-11-16%2009.23.17.png/QEm5XoLOJ-NdE639688jG3kH66bcPW7aQxCYbXE7HY8" height="500px" />
+                        <p>http://mustache.github.io/</p>
+                    </section>
+                    <section>
+                        <h2>Initialize Mustache</h2>
+                        <h3>src/mustache.php</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+class JotMapMustache extends Mustache_Engine {
+
+    public function __construct() {
+        // Mustache setup.
+        $mustache_options = array(
+            'loader' => new Mustache_Loader_FilesystemLoader(dirname(dirname(__FILE__)).'/views'),
+            'partials_loader' => new Mustache_Loader_FilesystemLoader(dirname(dirname(__FILE__)).'/views/partials'),
+        );
+
+        parent::__construct($mustache_options);
+    }
+}
+                            </code>
+                        </pre>
+                        <p>Alternative to relying on <a href="https://github.com/codeguy/Slim-Views">Slim Views</a></p>
                     </section>
                 </section>
 
