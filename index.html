@@ -303,9 +303,175 @@ class JotMapMustache extends Mustache_Engine {
                     </section>
                 </section>
 
+                <section>
+                    <section>
+                        <h2>JotForm Library</h2>
+                        <h3>PHP & JS to interact.</h3>
+                        <p>Follow docs and examples of how to work with Jotform services.</p>
+                        <p>http://developers.jotform.com/libraries</p>
+                        <p>https://github.com/jotform/jotform-api-php</p>
+                        <p>http://developers.jotform.com/integrations/</p>
+                    </section>
+                    <section>
+                        <h2>Initialize JotForm data</h2>
+                        <h3>step2.php, step3.php, etc.</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+try {
+    $jotformAPI = new JotForm($key);
+} catch (Exception $e) {
+}
+
+// Check if any forms return.
+if ($forms = $jotformAPI->getForms()) {
+    // do some stuff
+}
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Geocode</h2>
+                        <h3>Take addresses and make lat/long.</h3>
+                        <img src="http://photos-1.dropbox.com/t/0/AABwakrDNZMJeCujW71etsGLpxB545vTLRxr7QQKVMREeA/12/38412/png/1024x768/3/1384621200/0/2/Screenshot%202013-11-16%2009.37.32.png/555ciz4MgZGskGFwTsawIuKiiELMg048Am-Ry1q5HO0" width="1000px" />
+                        <p>http://geocoder-php.org/</p>
+                    </section>
+                    <section>
+                        <h2>Initialize Geocoder Library</h2>
+                        <h3>map.php</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+// Setup geocoder.
+$adapter = new \Geocoder\HttpAdapter\CurlHttpAdapter();
+$geocoder = new \Geocoder\Geocoder();
+$chain = new \Geocoder\Provider\ChainProvider(
+    array(
+        new \Geocoder\Provider\GoogleMapsProvider($adapter),
+    )
+);
+$geocoder->registerProvider($chain);
+
+// Try to geocode.
+try {
+    $geocode = $geocoder->geocode($address);
+    $longitude = $geocode->getLongitude();
+    $latitude = $geocode->getLatitude();
+    // do more stuff...
+}
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Mongo</h2>
+                        <h3>Cache geocoded addresses?</h3>
+                        <img src="https://mongolab.com/base/img/mongolab-logo-250x65.png"/>
+                        <p>http://www.mongodb.org/</p>
+                        <p>https://mongolab.com/</p>
+                    </section>
+                    <section>
+                        <h2>Initialize Mongo connection</h2>
+                        <h3>map.php</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+// Mongo URI.
+$mongo_uri = "mongodb://foo:bar@ds00000.mongolab.com:43338/jotmap";
+
+// Setup Mongo for storing already geocoded submissions.
+$uriParts = explode("/", $mongo_uri);
+$dbName = $uriParts[3];
+
+// Attempt to connect to mongo database.
+try {
+    $client = new MongoClient($mongo_uri);
+    $db = $client->$dbName;
+    $mongo_submissions = $db->submissions;
+    } catch (Exception $e) {
+}
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>Other Decisions</h2>
+                    <ul>
+                        <li class="fragment">Explore Mixpanel analytics</li>
+                        <li class="fragment">Keep it GET</li>
+                        <li class="fragment">Nice error page</li>
+                        <li class="fragment">Provide example link</li>
+                        <li class="fragment">Allow embed via iframe :-P</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>The Code</h2>
+                        <h3>Deeper dive.</h3>
+                        <p>Let's review, in greater detail, some of the parts to make it work.</p>
+                    </section>
+                    <section>
+                        <h2>Mustache Partials</h2>
+                        <h3>views/partials/step1.mustache</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+{{> pagetitle }}
+<div id="loginresults"></div>
+<button id="jotformlogin" class="btn btn-success btn-lg">Authorize JotMap</button>
+
+<h3>OR</h3>
+
+<form id="step1form" role="form" action="/step2" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control input-lg" id="jotformAPIKey" placeholder="Enter API Key" name="jotformapi">
+        <span class="input-group-btn">
+            <button type="submit" id="jotmapstep1" class="btn btn-success btn-lg">Next&nbsp;&rsaquo;&rsaquo;</button>
+        </span>
+    </div>
+</form>
+<script>
+mixpanel.track('Step1 viewed', {'page name' : document.title, 'url' : window.location.pathname, 'parameters' : window.location.search.replace( "?", "" )});
+mixpanel.track_forms("#step1form", "Step1 form submission");
+$("#jotmapstep1").click(function() {
+    mixpanel.track("Step1 clicked");
+});
+</script>
+                            </code>
+                        </pre>
+
+                    </section>
+
+                    <section>
+                        <h2>Mustache Rendering</h2>
+                        <h3>step1.php</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+// Mustache template loading.
+$m = new JotMapMustache;
+$page = $m->loadTemplate('page');
+
+// Hash
+$hash = array(
+    'pagetitle' => 'Enter JotForm API Key',
+    'step' => 1,
+    'jotformauth' => TRUE,
+    'sidebar-hidden' => TRUE,
+);
+echo $page->render($hash);
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
 				<section>
 					<h2>Questions?</h2>
 					<h3>By Fredric Mitchell / @fredricmitchell</h3>
+                    <p><strong>Slides:</strong></p>
+                    <p><strong>Feedback:</strong>https://joind.in/talk/view/10066</p>
 				</section>
 
 			</div>
