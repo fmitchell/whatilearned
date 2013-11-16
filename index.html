@@ -405,6 +405,7 @@ try {
                         <li class="fragment">Keep it GET</li>
                         <li class="fragment">Nice error page</li>
                         <li class="fragment">Provide example link</li>
+                        <li class="fragment">Provide help link</li>
                         <li class="fragment">Allow embed via iframe :-P</li>
                     </ul>
                 </section>
@@ -506,12 +507,115 @@ foreach ($submissions as $submission) {
                             </code>
                         </pre>
                     </section>
+                    <section>
+                        <h2>Mapping</h2>
+                        <h3>Leaflet is dead simple.</h3>
+                        <pre>
+                            <code data-trim contenteditable>
+// mapdata.mustache
+<script>
+    {{> mapjs }}
+    {{# markerdata }}
+    {{> markerjs }}
+    {{/ markerdata }}
+    var group = new L.featureGroup([{{marker_ids}}]);
+    map.fitBounds(group.getBounds());
+</script>
+
+// mapjs.mustache
+var map = L.map('map');
+
+L.tileLayer('//{s}.tile.cloudmade.com/{{cloudmade_api_key}}/998/256/{z}/{x}/{y}.png', {
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+maxZoom: 18
+}).addTo(map);
+
+// markerjs.mustache
+var {{marker_id}} = L.marker([{{lat}}, {{long}}]).addTo(map);
+{{marker_id}}.bindPopup("{{label}}");
+                            </code>
+                        </pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>The Product</h2>
+                        <h3>http://jotmap.jotform.io</h3>
+                        <img src="http://photos-2.dropbox.com/t/0/AAByDKHJiK_DLkkhLnVVjCICKRVOxHt9ZmykYDDmd2Tg1w/12/38412/png/1024x768/3/1384624800/0/2/Screenshot%202013-11-16%2010.21.14.png/ydgMVEXUImLFR4NB86oGaA2fLjFPxEJaNyneSlYotaI" height="500px"/>
+                    </section>
+                    <section>
+                        <h2>Yay!</h2>
+                        <h3>But tired.</h3>
+                        <img src="http://distilleryimage4.ak.instagram.com/c8d886d6022411e3b3af22000a1fb856_7.jpg" height="500px" />
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Have fun. Stay positive.</h3>
+                        <p>There will be critics, late nights, and <em>not perfect</em> implementations in your first implementation.</p>
+                        <p class="fragment">The point is to learn, not hate.</p>
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Analyze ALL THE THINGS.</h3>
+                        <img src="http://photos-1.dropbox.com/t/0/AADg7qVe8nzkDHcNbJLouUrTrRza2diZG71hZcOsGRCZWA/12/38412/png/1024x768/3/1384624800/0/2/Screenshot%202013-11-16%2010.39.18.png/PXL9LGWdKlyr3sCz8vs5NBba5Y4JcbX8SNQcOOmXkI4" />
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Analyze your analytics.</h3>
+                        <img src="http://photos-2.dropbox.com/t/0/AAB1MNgmWL-hYQqC9eFEiJZFzrfHjtcgfpAOUdauYnajJQ/12/38412/png/1024x768/3/1384624800/0/2/Screenshot%202013-11-16%2010.41.08.png/FxwI6EW8rOlavbu8fmcSUwXNeLghXHviZxC3NGe5jQw" />
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Embrace failure.</h3>
+                        <img src="http://photos-1.dropbox.com/t/0/AABZMIYsEfCkbYyWRs0e2igK1BmedJ4euDIpooUT5PXxrQ/12/38412/png/1024x768/3/1384624800/0/2/Screenshot%202013-11-16%2010.46.11.png/Eo8jZrpD_N6xn23yojhKLMH82sdFXJte8g0kt5bCENA" />
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>HTTP Request-type GET is OK.</h3>
+                        <img src="http://photos-1.dropbox.com/t/0/AADkGEoaL2IcUvATHEtcYnSGrH0Fn7AJnzmvZfNMbFJ64g/12/38412/png/1024x768/3/1384624800/0/2/Screenshot%202013-11-16%2010.52.13.png/TlWJw2mVJ43yCFWU6i1CoWXfxXrGaZ69w5Ute9MnGpU" />
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Your assumptions will be wrong.</h3>
+                        <p>The trade off of KISS is that user needs are complex.</p>
+                        <p>Must decide, within the budget (time, cost) that you have, what will be Phase 2, 3, etc.</p>
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Roll with the punches.</h3>
+                        <img src="https://photos-6.dropbox.com/t/0/AABlbWa7NVdutTyttmvJghtIDgVv7vEtTJsqKW-SfoS-nQ/12/38412/png/1024x768/3/1384628400/0/2/Screenshot%202013-11-16%2011.21.04.png/IlSR9hS-HjTtiqHTRRrrparSlP5TAAqXjuyhmibNjLc" />
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Share your experience.</h3>
+                        <p class="fragment">Allows for alternative opinions and approaches.</p>
+                        <p class="fragment">Possibly gives you uses for soft launch.</p>
+                        <p class="fragment">Inspires others to keep trying.</p>
+                        <p class="fragment">Contribute to the community (patches, pull requests).</p>
+                    </section>
+                    <section>
+                        <h2>The Lesson</h2>
+                        <h3>Better learning by doing.</h3>
+                        <p>Learning on your own time, by doing, is <strong>magical</strong>.</p>
+                    </section>
+                </section>
+
+                <section>
+                    <h2>JotMap</h2>
+                    <h3>Patches welcome.</h3>
+                    <p>http://jotmap.jotform.io</p>
+                    <p>https://github.com/fmitchell/jotmap</p>
                 </section>
 
 				<section>
 					<h2>Questions?</h2>
 					<h3>By Fredric Mitchell / @fredricmitchell</h3>
-                    <p><strong>Slides:</strong></p>
+                    <p><strong>Slides:</strong>http://brightplumbox.com/whatilearned/</p>
+                    <p><strong>Slides Repo:</strong>https://github.com/fmitchell/whatilearned</p>
                     <p><strong>Feedback:</strong>https://joind.in/talk/view/10066</p>
 				</section>
 
